@@ -3,7 +3,7 @@
     public class Cell
     {
         public Color Color { get; private set; }
-        public Coordinate Coordinate { get; private set; }
+        public Coordinate Coordinate { get; }
 
         public Cell(Color color, Coordinate coordinate)
         {
@@ -11,20 +11,9 @@
             Coordinate = coordinate;
         }
 
-        public void UpdateColor()
+        public void UpdateColor(Color newColor)
         {
-            switch (Color)
-            {
-                case Color.Black:
-                    Color=Color.White;
-
-                    break;
-
-                case Color.White:
-                    Color = Color.Black;
-
-                    break;
-            }
+            Color = newColor;
         }
     }
 }

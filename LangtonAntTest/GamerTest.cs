@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using LangtonAnt;
@@ -16,7 +17,12 @@ namespace LangtonAntTest
 
         public GamerTest()
         {
-            _sut = new Gamer();
+            var ruleList = new List<IRule>();
+            var whiteRule = new WhiteRule();
+            var blackRule = new BlackRule();
+            ruleList.Add(whiteRule);
+            ruleList.Add(blackRule);
+            _sut = new Gamer(ruleList);
             var coordinateEqualityComparer = new CoordinateEqualityComparer();
             _cellEqualityComparer = new CellEqualityComparer(coordinateEqualityComparer);
             _antEqualityComparer = new AntEqualityComparer(coordinateEqualityComparer);
