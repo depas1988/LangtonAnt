@@ -16,13 +16,16 @@ namespace LangtonAnt
 
         public void Play(Ant ant, Map map)
         {
-            var actualCell=map.GetCellOfCoordinate(ant.Coordinate);
+            //while(true)
+            //{ 
+                var cell=map.GetCell(ant.Coordinate);
+            
+                 _ruleList
+                    .First(x => x.IsApplicable(cell))
+                    .Apply(cell, ant);
 
-            var antNewCoordinate=_ruleList
-                .First(x => x.GetStartColor() == actualCell.Color)
-                .MoveAnt(actualCell,ant);
-
-            if (antNewCoordinate.Diameter() >= map.Size) throw new GameOverException();
+                if (map.IsOutOfBoundaries(ant)) throw new GameOverException(); 
+            //}
         }
 
     }
@@ -37,44 +40,41 @@ namespace LangtonAnt
 
     public interface IRule
     {
-        Color GetStartColor();
+        bool IsApplicable(Cell cell);
 
-        Coordinate MoveAnt(Cell actualCell, Ant ant);
+        void Apply(Cell cell, Ant ant);
     }
 
     public class WhiteRule : IRule
     {
 
-        public Color GetStartColor()
+        public bool IsApplicable(Cell cell)
         {
-            return Color.White;
+            return  Color.White==cell.Color;
         }
 
 
-        public Coordinate MoveAnt(Cell actualCell, Ant ant)
+        public void Apply(Cell cell, Ant ant)
         {
-            actualCell.UpdateColor(Color.Black);
+            cell.UpdateColor(Color.Black);
             ant.TurnRight();
-            return ant.MoveForward();
-            ;
+            ant.MoveForward();
+            
         }
     }
 
     public class BlackRule : IRule
     {
-
-        public Color GetStartColor()
+        public bool IsApplicable(Cell cell)
         {
-            return Color.Black;
+            return Color.Black == cell.Color;
         }
 
-
-        public Coordinate MoveAnt(Cell actualCell, Ant ant)
+        public void Apply(Cell cell, Ant ant)
         {
-            actualCell.UpdateColor(Color.White);
+            cell.UpdateColor(Color.White);
             ant.TurnLeft();
-            return ant.MoveForward();
-            ;
+            ant.MoveForward();
         }
     }
 

@@ -42,7 +42,7 @@ namespace LangtonAntTest
 
             _sut.Play(ant, map);
 
-            var cellActual = map.GetCellOfCoordinate(actualCoordinate);
+            var cellActual = map.GetCell(actualCoordinate);
 
             Assert.Equal(antExpected,ant, _antEqualityComparer);
 

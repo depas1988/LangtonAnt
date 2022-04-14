@@ -18,102 +18,30 @@ namespace LangtonAnt
 
         public void TurnRight()
         {
-            switch (_direction)
+            _direction = _direction switch
             {
-                case Direction.Right: _direction = Direction.Bottom;
-
-                    break;
-
-                case Direction.Up:
-                    _direction = Direction.Right;
-
-                    break;
-
-                case Direction.Left:
-                    _direction = Direction.Up;
-
-                    break;
-
-                case Direction.Bottom:
-                    _direction = Direction.Left;
-
-                    break;
-            }
+                Direction.Right => Direction.Down,
+                Direction.Up=> Direction.Right,
+                Direction.Left=> Direction.Up,
+                Direction.Down => Direction.Left
+            };
         }
 
         public void TurnLeft()
         {
-            switch (_direction)
+            _direction = _direction switch
             {
-                case Direction.Right:
-                    _direction = Direction.Up;
-
-                    break;
-
-                case Direction.Up:
-                    _direction = Direction.Left;
-
-                    break;
-
-                case Direction.Left:
-                    _direction = Direction.Bottom;
-
-                    break;
-
-                case Direction.Bottom:
-                    _direction = Direction.Right;
-
-                    break;
-            }
+                Direction.Right => Direction.Up,
+                Direction.Up => Direction.Left,
+                Direction.Left => Direction.Down,
+                Direction.Down => Direction.Right
+            };
+            
         }
-        public Coordinate MoveForward()
+        public void MoveForward()
         {
-            switch (_direction)
-            {
-                case Direction.Right:
-                    Coordinate=MoveAlongXForwardOfOneStep();
-
-                    break;
-
-                case Direction.Up:
-                     Coordinate=MoveAlongYForwardOfOneStep();
-
-                    break;
-
-                case Direction.Left:
-                    Coordinate=MoveAlongXBackwardOfOneStep();
-
-                    break;
-
-                case Direction.Bottom:
-                    Coordinate=MoveAlongYBackwardOfOneStep();
-
-                    break;
-            }
-
-            return Coordinate;
+            Coordinate=Coordinate.NextTo(_direction);
         }
-
-        private Coordinate MoveAlongXForwardOfOneStep()
-        {
-            return new Coordinate(Coordinate.X + 1, Coordinate.Y);
-        }
-
-        private Coordinate MoveAlongYForwardOfOneStep()
-        {
-            return new Coordinate(Coordinate.X, Coordinate.Y + 1);
-        }
-
-        private Coordinate MoveAlongXBackwardOfOneStep()
-        {
-            return new Coordinate(Coordinate.X - 1, Coordinate.Y);
-        }
-
-        private Coordinate MoveAlongYBackwardOfOneStep()
-        {
-            return new Coordinate(Coordinate.X, Coordinate.Y - 1);
-        }
-
     }
 
     public enum Color
@@ -127,6 +55,6 @@ namespace LangtonAnt
         Right,
         Up,
         Left,
-        Bottom
+        Down
     }
 }

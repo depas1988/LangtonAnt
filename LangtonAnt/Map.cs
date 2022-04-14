@@ -27,9 +27,14 @@ namespace LangtonAnt
             }
         }
 
-        public Cell GetCellOfCoordinate(Coordinate coordinate)
+        public Cell GetCell(Coordinate coordinate)
         {
             return _cells[coordinate.X, coordinate.Y];
+        }
+
+        public bool IsOutOfBoundaries(Ant ant)
+        {
+            return ant.Coordinate.Diameter() >= Size; //TODO fix check
         }
     }
 }
