@@ -1,4 +1,4 @@
-﻿namespace LangtonAnt
+﻿namespace LangtonAnt.DataModel
 {
     public class Cell
     {

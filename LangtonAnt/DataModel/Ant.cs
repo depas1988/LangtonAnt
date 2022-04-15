@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
-
-namespace LangtonAnt
+﻿namespace LangtonAnt.DataModel
 {
     public class Ant
     {

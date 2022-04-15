@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LangtonAnt
+﻿namespace LangtonAnt.DataModel
 {
     public class Coordinate
     {
@@ -11,11 +9,6 @@ namespace LangtonAnt
         {
             X = x;
             Y = y;
-        }
-
-        public int Diameter()
-        {
-            return X > Y ? X : Y;
         }
 
         public Coordinate NextTo(Direction direction)
