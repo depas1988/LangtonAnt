@@ -34,29 +34,35 @@ namespace LangtonAntUI
         private void GridMain()
         {
             Grid myGrid = new Grid();
-            myGrid.Width = 250;
-            myGrid.Height = 100;
+            myGrid.Width = 800; //TODO come recuperare queste misure
+            myGrid.Height = 800;
             myGrid.HorizontalAlignment = HorizontalAlignment.Left;
             myGrid.VerticalAlignment = VerticalAlignment.Top;
             myGrid.ShowGridLines = true;
 
-            // Define the Columns
-            ColumnDefinition colDef1 = new ColumnDefinition();
-            ColumnDefinition colDef2 = new ColumnDefinition();
-            ColumnDefinition colDef3 = new ColumnDefinition();
-            myGrid.ColumnDefinitions.Add(colDef1);
-            myGrid.ColumnDefinitions.Add(colDef2);
-            myGrid.ColumnDefinitions.Add(colDef3);
+            for (int i = 0; i <= 10; i++)
+            {
+                myGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                myGrid.RowDefinitions.Add(new RowDefinition());
+            }
+            ;
+
+            //ColumnDefinition colDef1 = new ColumnDefinition();
+            //ColumnDefinition colDef2 = new ColumnDefinition();
+            //ColumnDefinition colDef3 = new ColumnDefinition();
+            //myGrid.ColumnDefinitions.Add(colDef1);
+            //myGrid.ColumnDefinitions.Add(colDef2);
+            //myGrid.ColumnDefinitions.Add(colDef3);
 
             // Define the Rows
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
-            RowDefinition rowDef3 = new RowDefinition();
-            RowDefinition rowDef4 = new RowDefinition();
-            myGrid.RowDefinitions.Add(rowDef1);
-            myGrid.RowDefinitions.Add(rowDef2);
-            myGrid.RowDefinitions.Add(rowDef3);
-            myGrid.RowDefinitions.Add(rowDef4);
+            //RowDefinition rowDef1 = new RowDefinition();
+            //RowDefinition rowDef2 = new RowDefinition();
+            //RowDefinition rowDef3 = new RowDefinition();
+            //RowDefinition rowDef4 = new RowDefinition();
+            //myGrid.RowDefinitions.Add(rowDef1);
+            //myGrid.RowDefinitions.Add(rowDef2);
+            //myGrid.RowDefinitions.Add(rowDef3);
+            //myGrid.RowDefinitions.Add(rowDef4);
 
             // Add the first text cell to the Grid
             TextBlock txt1 = new TextBlock();
@@ -132,8 +138,10 @@ namespace LangtonAntUI
             //myGrid.Children.Add(txt8);
 
             // Add the Grid as the Content of the Parent Window Object
-            this.Content = myGrid;
-            Show();
+            
+            
+            MainGrid.Children.Add(myGrid);
+            this.Show();
 
 
             //    grid_Main.Height = 350;

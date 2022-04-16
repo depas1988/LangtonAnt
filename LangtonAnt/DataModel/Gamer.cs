@@ -50,7 +50,10 @@ namespace LangtonAnt.DataModel
         }
         public void Run(int maxNumOfIterations)
         {
-            var n = 0;
+            if (maxNumOfIterations < 1) throw new GameOverException();
+
+            var n = 1;
+            
             while (n<=maxNumOfIterations)
             {
                 _gamer.Play(Ant, Map);

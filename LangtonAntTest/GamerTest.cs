@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
@@ -66,43 +65,6 @@ namespace LangtonAntTest
 
             Assert.Throws <GameOverException> (() => _sut.Play(ant, map));
 
-        }
-    }
-
-    public class GameTest
-    {
-        private readonly MapEqualityComparer _mapEqualityComparer;
-        private readonly Game _sut;
-        public GameTest()
-        {
-            var coordinateEqualityComparer = new CoordinateEqualityComparer();
-            var cellEqualityComparer = new CellEqualityComparer(coordinateEqualityComparer);
-            _mapEqualityComparer = new MapEqualityComparer(cellEqualityComparer);
-
-            var ant = new Ant(new Coordinate(20, 20), Direction.Up);
-            var map = new Map(new Coordinate(0, 0), new Coordinate(40, 40));
-
-            var whiteRule = new WhiteRule();
-            var blackRule = new BlackRule();
-
-            var ruleList = new List<IRule>
-                {
-                    whiteRule, blackRule
-                }
-                ;
-
-            var gamer = new Gamer(ruleList);
-
-            _sut = new Game(gamer,ant, map);
-        }
-
-        [Fact]
-        public void Test()
-        {
-            var map1 = new Map(new Coordinate(0, 0), new Coordinate(30, 30));
-            var map2 = new Map(new Coordinate(0, 0), new Coordinate(30, 30));
-            
-            Assert.Equal(map1,map2,_mapEqualityComparer);
         }
     }
 }

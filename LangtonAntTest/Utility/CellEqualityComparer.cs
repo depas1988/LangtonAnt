@@ -20,7 +20,9 @@ namespace LangtonAntTest.Utility
             if (ReferenceEquals(y, null)) return false;
             if (x.GetType() != y.GetType()) return false;
 
-            return x.Color == y.Color && _coordinateEqualityComparer.Equals(x.Coordinate, y.Coordinate);
+            var a= x.Color == y.Color && _coordinateEqualityComparer.Equals(x.Coordinate, y.Coordinate);
+
+            return a;
         }
 
         public int GetHashCode(Cell obj)
