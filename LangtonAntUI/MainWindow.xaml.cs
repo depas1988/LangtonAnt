@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls;
+using LangtonAnt.DataModel;
 
 namespace LangtonAntUI
 {
@@ -23,24 +24,27 @@ namespace LangtonAntUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int _chessIndex=-1;
         
         public MainWindow()
         {
             InitializeComponent();
-            GridMain();
+            
         }
 
-
-        private void GridMain()
+        private void GridMain(int numberOfSquares)
         {
+            if(_chessIndex>=0)
+                MainGrid.Children.RemoveAt(_chessIndex);
+            
             Grid myGrid = new Grid();
-            myGrid.Width = 800; //TODO come recuperare queste misure
-            myGrid.Height = 800;
+            myGrid.Width = MainGrid.ColumnDefinitions[0].Width.Value;
+            myGrid.Height = MainGrid.RowDefinitions[0].Height.Value;
             myGrid.HorizontalAlignment = HorizontalAlignment.Left;
             myGrid.VerticalAlignment = VerticalAlignment.Top;
             myGrid.ShowGridLines = true;
 
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= numberOfSquares; i++)
             {
                 myGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 myGrid.RowDefinitions.Add(new RowDefinition());
@@ -140,7 +144,7 @@ namespace LangtonAntUI
             // Add the Grid as the Content of the Parent Window Object
             
             
-            MainGrid.Children.Add(myGrid);
+            _chessIndex=MainGrid.Children.Add(myGrid);
             this.Show();
 
 
@@ -165,6 +169,15 @@ namespace LangtonAntUI
             bmp.Width = 200;
             
             return bmp;
+        }
+
+        private void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            var numberOfSquares = new TextRange(NumberOfSquaresRichTextBox.Document.ContentStart, NumberOfSquaresRichTextBox.Document.ContentEnd).Text;
+            GridMain(int.TryParse(numberOfSquares, out int numberOfSquaresRichText) ? numberOfSquaresRichText : 10);
+
+            var map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresRichText, numberOfSquaresRichText));
+
         }
     }
 }

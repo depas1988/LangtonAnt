@@ -37,6 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LangtonAnt\LangtonAnt.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Image\ant.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

@@ -7,27 +7,51 @@
         mc:Ignorable="d"
         Title="LangtonAnt" Height="820" Width="1020">
 
-    <!--<Border BorderBrush="blue" BorderThickness="2" Width="800" HorizontalAlignment="Left" >-->
-        <Grid Name="MainGrid" >
-            <!--Name="MainGrid"
+    <Grid Name="MainGrid" >
+        <!--Name="MainGrid"
         Width="800"
         HorizontalAlignment="Left"-->
-       
-            <!--<Button Content="Run Game" HorizontalAlignment="Left" Margin="850,250,100,100" VerticalAlignment="Top" Width="100" Height="100"/>-->
-            <Grid.ColumnDefinitions>
+
+        <!--<Button Content="Run Game" HorizontalAlignment="Left" Margin="850,250,100,100" VerticalAlignment="Top" Width="100" Height="100"/>-->
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="800" />
             <ColumnDefinition Width="200" />
-            
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="800" />
         </Grid.RowDefinitions>
 
         <Border Grid.Column="0" Grid.Row="0"  BorderBrush="blue" BorderThickness="2" />
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Red" BorderThickness="2" />
-            
-        </Grid>
-     
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Red" BorderThickness="2" >
+            <ListBox xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                     Name="ListBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150">
+                <Label Content="Number Of Squares" RenderTransformOrigin="0.500,-10.805"/>
+                <RichTextBox Height="35" Width="135" Name="NumberOfSquaresRichTextBox">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="Please Enter Number Of Squares" FontSize="10"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <Label Content="Number Of Iterations" RenderTransformOrigin="0.500,-10.805"/>
+                <RichTextBox Height="47" Width="134" Name="NumberOfIterationsRichTextBox">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="Please Enter Number Of Iterations" FontSize="10"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <Button Content="Run" Name="RunButton" Height="100" Width="135" Margin="0,400,0,0" Click="RunButton_Click"/>
+
+
+            </ListBox>
+
+
+        </Border>
+
+    </Grid>
+
     <!--</Border>-->
     <!--<Grid
         Name="OptionGrid"
