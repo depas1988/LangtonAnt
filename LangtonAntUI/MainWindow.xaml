@@ -22,8 +22,10 @@
             <RowDefinition Height="800" />
         </Grid.RowDefinitions>
 
+
         <Border Grid.Column="0" Grid.Row="0"  BorderBrush="blue" BorderThickness="2" />
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Red" BorderThickness="2" >
+
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Red" BorderThickness="2" KeyDown="OnKeyDownHandler" >
             <ListBox xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      Name="ListBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150">
                 <Label Content="Number Of Squares" RenderTransformOrigin="0.500,-10.805"/>

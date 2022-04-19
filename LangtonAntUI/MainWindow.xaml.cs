@@ -16,18 +16,27 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using LangtonAnt.DataModel;
+using Color = LangtonAnt.DataModel.Color;
 
 namespace LangtonAntUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    ///
+    /// 
     public partial class MainWindow : Window
     {
+
+        private Image antImage;
         private int _chessIndex=-1;
-        
-        public MainWindow()
+        private readonly IGame _game;
+        private readonly IGamer _gamer;
+        public MainWindow(IGame game, IGamer gamer)
         {
+            _game = game;
+            _gamer = gamer;
+            
             InitializeComponent();
             
         }
@@ -117,19 +126,32 @@ namespace LangtonAntUI
             Grid.SetColumn(txt6, 1);
 
             // Add the final text cell to the Grid
-            var img = CreateImage();
-            
-            
-            Grid.SetRow(img, 1);
-            Grid.SetColumn(img, 1);
+            antImage = CreateImage();
+
+            SolidColorBrush solidBG = new SolidColorBrush(Colors.Aqua);
+            Border borderBG = new Border();
+            borderBG.Background = solidBG;
+
+
+            Grid.SetRow(antImage, 1);
+            Grid.SetColumn(antImage, 1);
+
+
+            Grid.SetRow(borderBG, 2);
+            Grid.SetColumn(borderBG, 2);
 
             // Total all Data and Span Three Columns
             TextBlock txt8 = new TextBlock();
             txt8.FontSize = 16;
             txt8.FontWeight = FontWeights.Bold;
             txt8.Text = "Total Units: " + (db1 + db2).ToString();
-            Grid.SetRow(txt8, 3);
-            Grid.SetColumnSpan(txt8, 3);
+            //txt8
+            //Grid.SetRow(txt8, 3,);
+            //Grid.
+            //Grid.SetColumnSpan(txt8, 3);
+            ////Grid.SetRow();
+            
+
 
             // Add the TextBlock elements to the Grid Children collection
             //myGrid.Children.Add(txt1);
@@ -138,8 +160,8 @@ namespace LangtonAntUI
             //myGrid.Children.Add(txt4);
             //myGrid.Children.Add(txt5);
             //myGrid.Children.Add(txt6);
-            myGrid.Children.Add(img);
-            //myGrid.Children.Add(txt8);
+            myGrid.Children.Add(antImage);
+            myGrid.Children.Add(borderBG);
 
             // Add the Grid as the Content of the Parent Window Object
             
@@ -164,6 +186,8 @@ namespace LangtonAntUI
             bi.BeginInit();
             bi.UriSource = new Uri(@"Image/ant.jpg", UriKind.RelativeOrAbsolute);
             bi.EndInit();
+
+
             Image bmp = new Image();
             bmp.Source = bi;
             bmp.Width = 200;
@@ -178,6 +202,17 @@ namespace LangtonAntUI
 
             var map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresRichText, numberOfSquaresRichText));
 
+            var ant = new Ant(new Coordinate(5,5), Direction.Up);
+
+
+            _game.Run(5);
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Right)
+            {
+            }
         }
     }
 }
