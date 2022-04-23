@@ -1,11 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿
 using Microsoft.Extensions.DependencyInjection;
+
+using System;
+
+using System.Windows;
+
+
+using System.Collections.Generic;
+
+
+using LangtonAnt.DataModel;
+using LangtonAnt.Interface;
+using LangtonAnt.Rule;
+
 
 namespace LangtonAntUI
 {
@@ -14,37 +21,45 @@ namespace LangtonAntUI
     /// </summary>
     public partial class App : Application
     {
+        private readonly IServiceProvider _serviceProvider;
 
         public App()
         {
             var services = new ServiceCollection();
             ConfigureServices(services);
+            _serviceProvider = services.BuildServiceProvider();
         }
 
 
         private void ConfigureServices(IServiceCollection services)
         {
-            //services
-            //    .AddSingleton(_runConfiguration.Channels)
-            //    .AddSingleton(BusinessFileValidation())
-            //    .AddSingleton(BusinessFileP360DataComparer())
-            //    .AddSingleton(ReportBuilderSetUp())
-            //    .AddSingleton(P360ServiceApiSetUp())
-            //    .AddSingleton<Flow>()
-            //    .AddSingleton<MainWindow>()
-            //    ;
+            services
+                .AddSingleton(GetGame())
+                .AddSingleton<MainWindow>()
+                ;
         }
 
-        //private IDataExtractor<BusinessInput> BusinessFileValidation()
-        //{
-        //    var processChainFactory = new ProcessChainFactory();
-        //    var iCheckerChain = processChainFactory.CreateChainImportFileChecks();
-        //    var fileValidator = new BusinessValidator(iCheckerChain, _runConfiguration.FileMtbDictionary);
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            var mainWindow = _serviceProvider.GetService<MainWindow>();
+
+            mainWindow.Show();
+        }
 
 
-        //    var businessDataManipulator = new BusinessDataManipulator();
-        //    var fileReader = new BusinessFileInputReader(businessDataManipulator);
-        //    return new DataExtractor<BusinessInput>(fileValidator, fileReader);
-        //}
+
+        private IGame GetGame()
+        {
+            var ruleList = new List<IRule>()
+                {
+                new BlackRule(),
+                new WhiteRule()
+                }
+                ;
+            var game = new Game(new Gamer(ruleList));
+
+            return game;
+        }
+
     }
 }

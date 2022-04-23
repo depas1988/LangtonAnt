@@ -29,35 +29,48 @@ namespace LangtonAntUI
     public partial class MainWindow : Window
     {
 
-        private Image antImage;
+        private Image _antImage;
         private int _chessIndex=-1;
+        private BitmapImage _bitmapImage;
+        private Ant _ant;
+        private Map _map;
+        private Grid _chessGrid;
+        private readonly SolidColorBrush _solidWhite = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush _solidBlack = new SolidColorBrush(Colors.Black);
         private readonly IGame _game;
-        private readonly IGamer _gamer;
-        public MainWindow(IGame game, IGamer gamer)
+        private int _numberOfRightDirectionStrokes = 0;
+        //public MainWindow(IGame game, IGamer gamer)
+        public MainWindow(IGame game)
         {
             _game = game;
-            _gamer = gamer;
             
             InitializeComponent();
-            
+            CreateImage();
         }
 
-        private void GridMain(int numberOfSquares)
+        private void PrepareChessGrid(int numberOfSquares)
         {
-            if(_chessIndex>=0)
-                MainGrid.Children.RemoveAt(_chessIndex);
-            
-            Grid myGrid = new Grid();
-            myGrid.Width = MainGrid.ColumnDefinitions[0].Width.Value;
-            myGrid.Height = MainGrid.RowDefinitions[0].Height.Value;
-            myGrid.HorizontalAlignment = HorizontalAlignment.Left;
-            myGrid.VerticalAlignment = VerticalAlignment.Top;
-            myGrid.ShowGridLines = true;
+        //    if (_chessIndex >= 0)
+        //    {
+        //        MainGrid.Children.RemoveAt(_chessIndex);
+        //    }
+
+
+            _chessGrid = new Grid
+            {
+                Width = MainGrid.ColumnDefinitions[0].Width.Value,
+                Height = MainGrid.RowDefinitions[0].Height.Value,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                ShowGridLines = true,
+                Opacity = 0.5
+            };
+
 
             for (int i = 0; i <= numberOfSquares; i++)
             {
-                myGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                myGrid.RowDefinitions.Add(new RowDefinition());
+                _chessGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                _chessGrid.RowDefinitions.Add(new RowDefinition());
             }
             ;
 
@@ -127,19 +140,29 @@ namespace LangtonAntUI
             Grid.SetColumn(txt6, 1);
 
             // Add the final text cell to the Grid
-            antImage = CreateImage();
+            //_antImage = CreateImage();
 
             SolidColorBrush solidBG = new SolidColorBrush(Colors.Aqua);
             Border borderBG = new Border();
             borderBG.Background = solidBG;
 
 
-            Grid.SetRow(antImage, 1);
-            Grid.SetColumn(antImage, 1);
+            Grid.SetRow(_antImage, _ant.Coordinate.X);
+            Grid.SetColumn(_antImage, _ant.Coordinate.Y);
 
 
             Grid.SetRow(borderBG, 2);
             Grid.SetColumn(borderBG, 2);
+
+            _chessGrid.Children.Add(borderBG);
+            
+            borderBG = new Border();
+            borderBG.Background = solidBG;
+
+            Grid.SetRow(borderBG, 4);
+            Grid.SetColumn(borderBG, 4);
+
+            _chessGrid.Children.Add(borderBG);
 
             // Total all Data and Span Three Columns
             TextBlock txt8 = new TextBlock();
@@ -161,14 +184,26 @@ namespace LangtonAntUI
             //myGrid.Children.Add(txt4);
             //myGrid.Children.Add(txt5);
             //myGrid.Children.Add(txt6);
-            myGrid.Children.Add(antImage);
-            myGrid.Children.Add(borderBG);
+            _chessGrid.Children.Add(_antImage);
+           // _chessGrid.Children.Add(borderBG);
+            
+            //TransformedBitmap transformBmp = new TransformedBitmap();
+
+            //transformBmp.BeginInit();
+
+            ////transformBmp.Source = antImage;
+
+            //RotateTransform transform = new RotateTransform(90);
+
+            //transformBmp.Transform = transform;
+
+            //transformBmp.EndInit();
 
             // Add the Grid as the Content of the Parent Window Object
+
+            _chessIndex = MainGrid.Children.Add(_chessGrid);
             
-            
-            _chessIndex=MainGrid.Children.Add(myGrid);
-            this.Show();
+            Show();
 
 
             //    grid_Main.Height = 350;
@@ -179,40 +214,112 @@ namespace LangtonAntUI
             //    CreateImage();
 
         }
-        private Image CreateImage()
+
+        private void UpdateChessGrid()
         {
-            
-            BitmapImage bi = new BitmapImage();
-            
-            bi.BeginInit();
-            bi.UriSource = new Uri(@"Image/ant.jpg", UriKind.RelativeOrAbsolute);
-            bi.EndInit();
+            _chessGrid.Children.Clear();
 
 
-            Image bmp = new Image();
-            bmp.Source = bi;
-            bmp.Width = 200;
-            
-            return bmp;
+            foreach (var cell in _map.Cells)
+            {
+                if (cell.Color == Color.White)
+                {
+
+                    var whiteBorder = new Border { Background = _solidWhite };
+                    Grid.SetRow(whiteBorder, cell.Coordinate.X);
+                    Grid.SetColumn(whiteBorder, cell.Coordinate.Y);
+                    _chessGrid.Children.Add(whiteBorder);
+                }
+
+                if (cell.Color == Color.Black)
+                {
+                    var blackBorder = new Border { Background = _solidBlack };
+                    Grid.SetRow(blackBorder, cell.Coordinate.X);
+                    Grid.SetColumn(blackBorder, cell.Coordinate.Y);
+                    _chessGrid.Children.Add(blackBorder);
+                }
+            }
+
+            Grid.SetRow(_antImage, _ant.Coordinate.X);
+            Grid.SetColumn(_antImage, _ant.Coordinate.Y);
+            _chessGrid.Children.Add(_antImage);
+        }
+
+        //private Image CreateImage()
+        //{
+
+        //    BitmapImage bi = new BitmapImage();
+
+        //    bi.BeginInit();
+        //    bi.UriSource = new Uri(@"Image/ant.jpg", UriKind.RelativeOrAbsolute);
+        //    bi.EndInit();
+
+
+        //    Image bmp = new Image();
+        //    bmp.Source = bi;
+
+
+
+        //    return bmp;
+        //}
+
+        
+
+        private void PrepareButton_Click(object sender, RoutedEventArgs e)
+        {
+            var numberOfSquares = NumberOfSquaresTextBox.Text;
+
+            if (!int.TryParse(numberOfSquares, out int numberOfSquaresParsedResult))
+                
+                numberOfSquaresParsedResult = 10;
+
+            _map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresParsedResult, numberOfSquaresParsedResult));
+
+            _ant = new Ant(new Coordinate(Convert.ToInt32(AntX.Text), Convert.ToInt32(AntY.Text)), Direction.Up);
+
+            PrepareChessGrid(numberOfSquaresParsedResult);
+
+
+            ///    _game.Run(5);
         }
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            var numberOfSquares = new TextRange(NumberOfSquaresRichTextBox.Document.ContentStart, NumberOfSquaresRichTextBox.Document.ContentEnd).Text;
-            GridMain(int.TryParse(numberOfSquares, out int numberOfSquaresRichText) ? numberOfSquaresRichText : 10);
+            _game.Run(10,_ant,_map);
+            UpdateChessGrid();
+        }
 
-            var map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresRichText, numberOfSquaresRichText));
+        private void CreateImage()
+        {
+            _bitmapImage = new BitmapImage(new Uri(@"Image/ant.jpg", UriKind.RelativeOrAbsolute));
 
-            var ant = new Ant(new Coordinate(5,5), Direction.Up);
+            _antImage = new Image { Source = _bitmapImage };
+        }
 
+        private void RotateImageToRight()
+        {
+            TransformedBitmap transformBmp = new TransformedBitmap();
 
-            _game.Run(5);
+            transformBmp.BeginInit();
+
+            transformBmp.Source = _bitmapImage;
+
+            RotateTransform transform = new RotateTransform(_numberOfRightDirectionStrokes * 90);
+
+            transformBmp.Transform = transform;
+
+            transformBmp.EndInit();
+
+            _antImage.Source = transformBmp;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Right)
+            if (e.Key == Key.Right && _ant!=null)
             {
+                _numberOfRightDirectionStrokes++;
+                _ant.TurnRight();
+                RotateImageToRight();
             }
         }
     }

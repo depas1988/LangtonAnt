@@ -6,20 +6,16 @@ namespace LangtonAnt.DataModel
     public class Game : IGame
     {
         private readonly IGamer _gamer;
-        public Ant Ant { get; }
-        private Map Map { get; }
-        public Game(IGamer gamer, Ant ant, Map map)
+        public Game(IGamer gamer)
         {
             _gamer = gamer;
-            Ant = ant;
-            Map = map;
         }
-        public void Run(int maxNumOfIterations)
+        public void Run(int maxNumOfIterations, Ant ant, Map map)
         {
             if (maxNumOfIterations < 1) throw new GameOverException();
 
             while (maxNumOfIterations-- > 0)
-                _gamer.Play(Ant, Map);
+                _gamer.Play(ant, map);
         }
     }
 }

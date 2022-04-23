@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:LangtonAntUI"
         mc:Ignorable="d"
         Title="LangtonAnt" Height="820" Width="1020">
@@ -24,32 +25,35 @@
 
 
         <Border Grid.Column="0" Grid.Row="0"  BorderBrush="blue" BorderThickness="2" />
-
         <Border Grid.Column="1" Grid.Row="0" BorderBrush="Red" BorderThickness="2" KeyDown="OnKeyDownHandler" >
             <ListBox xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      Name="ListBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150">
-                <Label Content="Number Of Squares" RenderTransformOrigin="0.500,-10.805"/>
-                <RichTextBox Height="35" Width="135" Name="NumberOfSquaresRichTextBox">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="Please Enter Number Of Squares" FontSize="10"/>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <Label Content="Number Of Iterations" RenderTransformOrigin="0.500,-10.805"/>
-                <RichTextBox Height="47" Width="134" Name="NumberOfIterationsRichTextBox">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="Please Enter Number Of Iterations" FontSize="10"/>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <Button Content="Run" Name="RunButton" Height="100" Width="135" Margin="0,400,0,0" Click="RunButton_Click"/>
-
-
+                <Label Content="Number Of Squares" RenderTransformOrigin="0.500,-10.805" FontWeight="Bold"/>
+                <extToolkit:WatermarkTextBox Height="47" Width="134" Name="NumberOfSquaresTextBox"
+                                             TextWrapping="NoWrap"
+                                             AcceptsReturn="True"
+                                             Watermark="Please Enter"
+                                             FontSize="14"/>
+                <Label Content="Number Of Iterations" RenderTransformOrigin="0.500,-10.805" FontWeight="Bold"/>
+                <extToolkit:WatermarkTextBox Height="47" Width="134" Name="NumberOfIterationsTextBox"
+                                             TextWrapping="NoWrap"
+                                             AcceptsReturn="True"
+                                             Watermark="Please Enter"
+                                             FontSize="14"/>
+                <Label Content="Position of the Ant" RenderTransformOrigin="0.500,-10.805" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal">
+                <Label Target="{Binding ElementName=AntX}">_X:
+                </Label>
+                <TextBox x:Name="AntX" Width="50" Text="1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Target="{Binding ElementName=AntY}">_Y:
+                    </Label>
+                    <TextBox x:Name="AntY" Width="50" Text="1" />
+                </StackPanel>
+                <Button Content="Prepare" Name="PrepareButton" Height="100" Width="135" Click="PrepareButton_Click"/>
+                <Button Content="Run" Name="RunButton" Height="100" Width="135" Click="RunButton_Click"/>
             </ListBox>
-
-
         </Border>
 
     </Grid>

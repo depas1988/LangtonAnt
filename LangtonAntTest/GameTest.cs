@@ -51,7 +51,7 @@ namespace LangtonAntTest
 
             var antExpected = new Ant(new Coordinate(10, 9), Direction.Down);
 
-            _sut = new Game(_gamer, antActual, mapActual);
+            _sut = new Game(_gamer);
 
             var mapExpected = new MapEmulator(new Coordinate(0, 0), new Coordinate(20, 20), _cellEqualityComparer);
             
@@ -61,7 +61,7 @@ namespace LangtonAntTest
             mapExpected.UpdateCell(new Coordinate(11, 10), FlipToBlack);
             mapExpected.UpdateCell(new Coordinate(10, 10), FlipToWhite);
 
-            _sut.Run(5);
+            _sut.Run(5, antActual, mapActual);
 
             Assert.Equal(0,mapExpected.CompareTo(mapActual));
 
@@ -74,9 +74,9 @@ namespace LangtonAntTest
             var antActual = new Ant(new Coordinate(10, 10), Direction.Left);
             var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20));
 
-            _sut = new Game(_gamer, antActual, mapActual);
+            _sut = new Game(_gamer);
 
-            Assert.Throws<GameOverException>(() => _sut.Run(0));
+            Assert.Throws<GameOverException>(() => _sut.Run(0,antActual, mapActual));
         }
 
     }
