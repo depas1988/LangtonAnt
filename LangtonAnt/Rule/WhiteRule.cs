@@ -17,7 +17,6 @@ namespace LangtonAnt.Rule
             cell.UpdateColor(Color.Black);
             ant.TurnRight();
             ant.MoveForward();
-            
         }
     }
 }

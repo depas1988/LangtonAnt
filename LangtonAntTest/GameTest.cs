@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LangtonAnt.DataModel;
 using LangtonAnt.Interface;
 using LangtonAnt.Rule;
+using LangtonAnt.Utility;
 using LangtonAntTest.Utility;
 using Xunit;
 
@@ -66,5 +67,17 @@ namespace LangtonAntTest
 
             Assert.Equal(antExpected, antActual,_antEqualityComparer);
         }
+
+        [Fact]
+        public void TestExceptionWithANonPositiveNumberOfIterations()
+        {
+            var antActual = new Ant(new Coordinate(10, 10), Direction.Left);
+            var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20));
+
+            _sut = new Game(_gamer, antActual, mapActual);
+
+            Assert.Throws<GameOverException>(() => _sut.Run(0));
+        }
+
     }
 }
