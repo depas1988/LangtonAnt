@@ -10,18 +10,18 @@ namespace LangtonAntTest
 {
     public class GameTest
     {
-        
         private Game _sut;
         private readonly CellEqualityComparer _cellEqualityComparer;
-        private Gamer _gamer;
+        private readonly Gamer _gamer;
+        private readonly AntEqualityComparer _antEqualityComparer;
         public GameTest()
         {
             var coordinateEqualityComparer = new CoordinateEqualityComparer();
             _cellEqualityComparer = new CellEqualityComparer(coordinateEqualityComparer);
-            
+            _antEqualityComparer = new AntEqualityComparer(coordinateEqualityComparer);
+
             var whiteRule = new WhiteRule();
             var blackRule = new BlackRule();
-
             var ruleList = new List<IRule>
                 {
                     whiteRule, blackRule
@@ -30,39 +30,41 @@ namespace LangtonAntTest
 
             _gamer = new Gamer(ruleList);
 
-            
+        }
+
+        private void FlipToBlack(Cell cell)
+        {
+            cell.UpdateColor(Color.Black);
+        }
+
+        private void FlipToWhite(Cell cell)
+        {
+            cell.UpdateColor(Color.White);
         }
 
         [Fact]
-        public void TestGame()
+        public void TestGameAfterFiveSteps()
         {
-            var ant = new Ant(new Coordinate(10, 10), Direction.Left);
-            var map = new Map(new Coordinate(0, 0), new Coordinate(20, 20));
+            var antActual = new Ant(new Coordinate(10, 10), Direction.Left);
+            var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20));
 
-            _sut = new Game(_gamer, ant, map);
+            var antExpected = new Ant(new Coordinate(10, 9), Direction.Down);
 
-            Action<Cell> flipToBlack = delegate(Cell cell)
-            {
-                cell.UpdateColor(Color.Black);
-            };
-
-            Action<Cell> flipToWhite = delegate (Cell cell)
-            {
-                cell.UpdateColor(Color.White);
-            };
-
+            _sut = new Game(_gamer, antActual, mapActual);
 
             var mapExpected = new MapEmulator(new Coordinate(0, 0), new Coordinate(20, 20), _cellEqualityComparer);
             
-            mapExpected.UpdateCell(new Coordinate(10,10),flipToBlack);
-            mapExpected.UpdateCell(new Coordinate(10, 11), flipToBlack);
-            mapExpected.UpdateCell(new Coordinate(11, 11), flipToBlack);
-            mapExpected.UpdateCell(new Coordinate(11, 10), flipToBlack);
-            mapExpected.UpdateCell(new Coordinate(10, 10), flipToWhite);
+            mapExpected.UpdateCell(new Coordinate(10,10),FlipToBlack);
+            mapExpected.UpdateCell(new Coordinate(10, 11), FlipToBlack);
+            mapExpected.UpdateCell(new Coordinate(11, 11), FlipToBlack);
+            mapExpected.UpdateCell(new Coordinate(11, 10), FlipToBlack);
+            mapExpected.UpdateCell(new Coordinate(10, 10), FlipToWhite);
 
             _sut.Run(5);
 
-            Assert.Equal(0,mapExpected.CompareTo(map));
+            Assert.Equal(0,mapExpected.CompareTo(mapActual));
+
+            Assert.Equal(antExpected, antActual,_antEqualityComparer);
         }
     }
 }

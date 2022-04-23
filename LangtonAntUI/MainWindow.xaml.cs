@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using LangtonAnt.DataModel;
+using LangtonAnt.Interface;
 using Color = LangtonAnt.DataModel.Color;
 
 namespace LangtonAntUI
