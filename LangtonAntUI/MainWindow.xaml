@@ -9,12 +9,7 @@
         Title="LangtonAnt" Height="820" Width="1020">
 
     <Grid Name="MainGrid" >
-        <!--Name="MainGrid"
-        Width="800"
-        HorizontalAlignment="Left"-->
-
-        <!--<Button Content="Run Game" HorizontalAlignment="Left" Margin="850,250,100,100" VerticalAlignment="Top" Width="100" Height="100"/>-->
-        <Grid.ColumnDefinitions>
+           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="800" />
             <ColumnDefinition Width="200" />
 
@@ -24,8 +19,15 @@
         </Grid.RowDefinitions>
 
 
-        <Border Grid.Column="0" Grid.Row="0"  BorderBrush="blue" BorderThickness="2" />
+        <Border Grid.Column="0" Grid.Row="0"  BorderBrush="Blue" BorderThickness="2" />
         <Border Grid.Column="1" Grid.Row="0" BorderBrush="Red" BorderThickness="2" KeyDown="OnKeyDownHandler" >
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="LightCyan" Offset="0.0" />
+                    <GradientStop Color="LightBlue" Offset="0.5" />
+                    <GradientStop Color="DarkTurquoise" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
             <ListBox xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      Name="ListBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150">
                 <Label Content="Number Of Squares" RenderTransformOrigin="0.500,-10.805" FontWeight="Bold"/>
@@ -57,16 +59,4 @@
         </Border>
 
     </Grid>
-
-    <!--</Border>-->
-    <!--<Grid
-        Name="OptionGrid"
-        Width="200"
-        HorizontalAlignment="Right">
-    </Grid>-->
-    <!--<Image Width="200"  Margin="5" Grid.Column="1" Grid.Row="1"  >
-        <Image.Source>
-            <BitmapImage UriSource="Image/ant.jpg" />
-        </Image.Source>
-    </Image>-->
 </Window>

@@ -50,12 +50,7 @@ namespace LangtonAntUI
 
         private void PrepareChessGrid(int numberOfSquares)
         {
-        //    if (_chessIndex >= 0)
-        //    {
-        //        MainGrid.Children.RemoveAt(_chessIndex);
-        //    }
-
-
+            
             _chessGrid = new Grid
             {
                 Width = MainGrid.ColumnDefinitions[0].Width.Value,
@@ -92,83 +87,83 @@ namespace LangtonAntUI
             //myGrid.RowDefinitions.Add(rowDef4);
 
             // Add the first text cell to the Grid
-            TextBlock txt1 = new TextBlock();
-            txt1.Text = "2005 Products Shipped";
-            txt1.FontSize = 20;
-            txt1.FontWeight = FontWeights.Bold;
-            Grid.SetColumnSpan(txt1, 3);
-            Grid.SetRow(txt1, 0);
+            //TextBlock txt1 = new TextBlock();
+            //txt1.Text = "2005 Products Shipped";
+            //txt1.FontSize = 20;
+            //txt1.FontWeight = FontWeights.Bold;
+            //Grid.SetColumnSpan(txt1, 3);
+            //Grid.SetRow(txt1, 0);
 
-            // Add the second text cell to the Grid
-            TextBlock txt2 = new TextBlock();
-            txt2.Text = "Quarter 1";
-            txt2.FontSize = 12;
-            txt2.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt2, 1);
-            Grid.SetColumn(txt2, 0);
+            //// Add the second text cell to the Grid
+            //TextBlock txt2 = new TextBlock();
+            //txt2.Text = "Quarter 1";
+            //txt2.FontSize = 12;
+            //txt2.FontWeight = FontWeights.Bold;
+            //Grid.SetRow(txt2, 1);
+            //Grid.SetColumn(txt2, 0);
 
-            // Add the third text cell to the Grid
-            TextBlock txt3 = new TextBlock();
-            txt3.Text = "Quarter 2";
-            txt3.FontSize = 12;
-            txt3.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt3, 1);
-            Grid.SetColumn(txt3, 1);
+            //// Add the third text cell to the Grid
+            //TextBlock txt3 = new TextBlock();
+            //txt3.Text = "Quarter 2";
+            //txt3.FontSize = 12;
+            //txt3.FontWeight = FontWeights.Bold;
+            //Grid.SetRow(txt3, 1);
+            //Grid.SetColumn(txt3, 1);
 
-            // Add the fourth text cell to the Grid
-            TextBlock txt4 = new TextBlock();
-            txt4.Text = "Quarter 3";
-            txt4.FontSize = 12;
-            txt4.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt4, 1);
-            Grid.SetColumn(txt4, 2);
+            //// Add the fourth text cell to the Grid
+            //TextBlock txt4 = new TextBlock();
+            //txt4.Text = "Quarter 3";
+            //txt4.FontSize = 12;
+            //txt4.FontWeight = FontWeights.Bold;
+            //Grid.SetRow(txt4, 1);
+            //Grid.SetColumn(txt4, 2);
 
-            // Add the sixth text cell to the Grid
-            TextBlock txt5 = new TextBlock();
-            Double db1 = new Double();
-            db1 = 50000;
-            txt5.Text = db1.ToString();
-            Grid.SetRow(txt5, 2);
-            Grid.SetColumn(txt5, 0);
+            //// Add the sixth text cell to the Grid
+            //TextBlock txt5 = new TextBlock();
+            //Double db1 = new Double();
+            //db1 = 50000;
+            //txt5.Text = db1.ToString();
+            //Grid.SetRow(txt5, 2);
+            //Grid.SetColumn(txt5, 0);
 
-            // Add the seventh text cell to the Grid
-            TextBlock txt6 = new TextBlock();
-            Double db2 = new Double();
-            db2 = 100000;
-            txt6.Text = db2.ToString();
-            Grid.SetRow(txt6, 2);
-            Grid.SetColumn(txt6, 1);
+            //// Add the seventh text cell to the Grid
+            //TextBlock txt6 = new TextBlock();
+            //Double db2 = new Double();
+            //db2 = 100000;
+            //txt6.Text = db2.ToString();
+            //Grid.SetRow(txt6, 2);
+            //Grid.SetColumn(txt6, 1);
 
             // Add the final text cell to the Grid
             //_antImage = CreateImage();
 
-            SolidColorBrush solidBG = new SolidColorBrush(Colors.Aqua);
-            Border borderBG = new Border();
-            borderBG.Background = solidBG;
+            //SolidColorBrush solidBG = new SolidColorBrush(Colors.Aqua);
+            //Border borderBG = new Border();
+            //borderBG.Background = solidBG;
 
 
             Grid.SetRow(_antImage, _ant.Coordinate.X);
             Grid.SetColumn(_antImage, _ant.Coordinate.Y);
 
 
-            Grid.SetRow(borderBG, 2);
-            Grid.SetColumn(borderBG, 2);
+            //Grid.SetRow(borderBG, 2);
+            //Grid.SetColumn(borderBG, 2);
 
-            _chessGrid.Children.Add(borderBG);
+            //_chessGrid.Children.Add(borderBG);
             
-            borderBG = new Border();
-            borderBG.Background = solidBG;
+            //borderBG = new Border();
+            //borderBG.Background = solidBG;
 
-            Grid.SetRow(borderBG, 4);
-            Grid.SetColumn(borderBG, 4);
+            //Grid.SetRow(borderBG, 4);
+            //Grid.SetColumn(borderBG, 4);
 
-            _chessGrid.Children.Add(borderBG);
+            //_chessGrid.Children.Add(borderBG);
 
             // Total all Data and Span Three Columns
-            TextBlock txt8 = new TextBlock();
-            txt8.FontSize = 16;
-            txt8.FontWeight = FontWeights.Bold;
-            txt8.Text = "Total Units: " + (db1 + db2).ToString();
+            //TextBlock txt8 = new TextBlock();
+            //txt8.FontSize = 16;
+            //txt8.FontWeight = FontWeights.Bold;
+            //txt8.Text = "Total Units: " + (db1 + db2).ToString();
             //txt8
             //Grid.SetRow(txt8, 3,);
             //Grid.
@@ -219,7 +214,6 @@ namespace LangtonAntUI
         {
             _chessGrid.Children.Clear();
 
-
             foreach (var cell in _map.Cells)
             {
                 if (cell.Color == Color.White)
@@ -242,6 +236,15 @@ namespace LangtonAntUI
 
             Grid.SetRow(_antImage, _ant.Coordinate.X);
             Grid.SetColumn(_antImage, _ant.Coordinate.Y);
+
+            switch(_ant.Direction)
+            {
+                case Direction.Right: RotateImageClockwise(1); break;
+                case Direction.Up: RotateImageClockwise(0); break;
+                case Direction.Left: RotateImageClockwise(3); break;
+                case Direction.Down: RotateImageClockwise(2); break;
+            };
+
             _chessGrid.Children.Add(_antImage);
         }
 
@@ -279,13 +282,17 @@ namespace LangtonAntUI
 
             PrepareChessGrid(numberOfSquaresParsedResult);
 
-
-            ///    _game.Run(5);
         }
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            _game.Run(10,_ant,_map);
+            var numberOfIterations = NumberOfIterationsTextBox.Text;
+
+            if (!int.TryParse(numberOfIterations, out int numberOfIterationsParsedResult))
+
+                numberOfIterationsParsedResult = 10;
+
+            _game.Run(numberOfIterationsParsedResult, _ant,_map);
             UpdateChessGrid();
         }
 
@@ -296,7 +303,7 @@ namespace LangtonAntUI
             _antImage = new Image { Source = _bitmapImage };
         }
 
-        private void RotateImageToRight()
+        private void RotateImageClockwise(int numberOfQuarters)
         {
             TransformedBitmap transformBmp = new TransformedBitmap();
 
@@ -304,7 +311,7 @@ namespace LangtonAntUI
 
             transformBmp.Source = _bitmapImage;
 
-            RotateTransform transform = new RotateTransform(_numberOfRightDirectionStrokes * 90);
+            RotateTransform transform = new RotateTransform(numberOfQuarters * 90);
 
             transformBmp.Transform = transform;
 
@@ -319,7 +326,7 @@ namespace LangtonAntUI
             {
                 _numberOfRightDirectionStrokes++;
                 _ant.TurnRight();
-                RotateImageToRight();
+                RotateImageClockwise(_numberOfRightDirectionStrokes);
             }
         }
     }

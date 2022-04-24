@@ -3,17 +3,17 @@
     public class Ant
     {
         public Coordinate Coordinate { get; private set; }
-        private Direction _direction;
+        public Direction Direction { get; private set; }
 
         public Ant(Coordinate coordinate, Direction direction)
         {
             Coordinate = coordinate;
-            _direction = direction;
+            Direction = direction;
         }
 
         public void TurnRight()
         {
-            _direction = _direction switch
+            Direction = Direction switch
             {
                 Direction.Right => Direction.Down,
                 Direction.Up=> Direction.Right,
@@ -24,7 +24,7 @@
 
         public void TurnLeft()
         {
-            _direction = _direction switch
+            Direction = Direction switch
             {
                 Direction.Right => Direction.Up,
                 Direction.Up => Direction.Left,
@@ -35,7 +35,7 @@
         }
         public void MoveForward()
         {
-            Coordinate=Coordinate.NextTo(_direction);
+            Coordinate=Coordinate.NextTo(Direction);
         }
     }
 
