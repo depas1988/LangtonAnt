@@ -20,7 +20,7 @@ namespace LangtonAntTest.Utility
             if (ReferenceEquals(y, null)) return false;
             if (x.GetType() != y.GetType()) return false;
 
-            return _coordinateEqualityComparer.Equals(x.Coordinate, y.Coordinate);
+            return _coordinateEqualityComparer.Equals(x.Coordinate, y.Coordinate) && x.Direction.Equals(y.Direction);
         }
 
         public int GetHashCode(Ant obj)

@@ -50,7 +50,13 @@ namespace LangtonAntUI
 
         private void PrepareChessGrid(int numberOfSquares)
         {
-            
+
+            if (_chessGrid!=null)
+            {
+                _chessGrid.Children.Clear();
+                MainGrid.Children.Remove(_chessGrid);
+            }
+
             _chessGrid = new Grid
             {
                 Width = MainGrid.ColumnDefinitions[0].Width.Value,
@@ -210,7 +216,7 @@ namespace LangtonAntUI
 
         }
 
-        private void UpdateChessGrid()
+        private void RenderChessGrid()
         {
             _chessGrid.Children.Clear();
 
@@ -293,7 +299,8 @@ namespace LangtonAntUI
                 numberOfIterationsParsedResult = 10;
 
             _game.Run(numberOfIterationsParsedResult, _ant,_map);
-            UpdateChessGrid();
+            
+            RenderChessGrid();
         }
 
         private void CreateImage()

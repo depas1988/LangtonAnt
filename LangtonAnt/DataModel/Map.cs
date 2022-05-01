@@ -31,10 +31,12 @@ namespace LangtonAnt.DataModel
             {
                 for (int j = 0; j < sizeY; j++)
                 {
-
+                    
                     var color = _coordinateListWithNoDefaultColor
                             .Where(x => x.Item1.X == i && x.Item1.Y == j)
                             .Select(x => x.Item2)
+                            .DefaultIfEmpty(Enum.GetValues(typeof(Color)).OfType<Color>()
+                                .FirstOrDefault(x => x.IsDefault()))
                             .FirstOrDefault()
                         ;
 

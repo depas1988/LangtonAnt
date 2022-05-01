@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:LangtonAntUI"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="LangtonAnt" Height="820" Width="1020">
+    <Window.Resources>
+        <Style x:Key="cbTB" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=cb, Path=IsChecked}" Value="True">
+                    <Setter Property="TextBox.IsEnabled" Value="False" />
+                    <Setter Property="TextBox.Text" Value="" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=cb, Path=IsChecked}" Value="False">
+                    <Setter Property="TextBox.IsEnabled" Value="True"/>
+                    <Setter Property="TextBox.Text" Value="2" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+      
+    </Window.Resources>
 
     <Grid Name="MainGrid" >
            <Grid.ColumnDefinitions>
@@ -46,12 +62,17 @@
                 <StackPanel Orientation="Horizontal">
                 <Label Target="{Binding ElementName=AntX}">_X:
                 </Label>
-                <TextBox x:Name="AntX" Width="50" Text="1"/>
+                    <TextBox x:Name="AntX" Width="50" Style="{StaticResource cbTB}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Target="{Binding ElementName=AntY}">_Y:
                     </Label>
-                    <TextBox x:Name="AntY" Width="50" Text="1" />
+                    <TextBox x:Name="AntY" Width="50" Style="{StaticResource cbTB}"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold">Application Options</Label>
+                    <CheckBox x:Name="cb">Random Ant</CheckBox>
+                    <CheckBox>Random Initial Map</CheckBox>
                 </StackPanel>
                 <Button Content="Prepare" Name="PrepareButton" Height="100" Width="135" Click="PrepareButton_Click"/>
                 <Button Content="Run" Name="RunButton" Height="100" Width="135" Click="RunButton_Click"/>

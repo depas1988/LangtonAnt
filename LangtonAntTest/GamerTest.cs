@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using LangtonAnt;
 using LangtonAnt.DataModel;
@@ -14,63 +15,74 @@ using Xunit.Sdk;
 
 namespace LangtonAntTest
 {
-    //TODO fare una regola (test double) che non fa niente che è applicabile (1 sola volta)
-    //TODO fare una regola (test double) che fa andare avanti di 1000 volte di modo che 
-    //TODO vada fuori dai boundaries (uno per lato e due per corner) 
     public class GamerTest
     {
 
-        private readonly Gamer _sut;
+        private Gamer _sut;
         private readonly AntEqualityComparer _antEqualityComparer;
         private readonly CellEqualityComparer _cellEqualityComparer;
+        private readonly MapEqualityComparer _mapEqualityComparer;
 
         public GamerTest()
         {
-            
-           
             var coordinateEqualityComparer = new CoordinateEqualityComparer();
             _cellEqualityComparer = new CellEqualityComparer(coordinateEqualityComparer);
             _antEqualityComparer = new AntEqualityComparer(coordinateEqualityComparer);
+            _mapEqualityComparer = new MapEqualityComparer(_cellEqualityComparer);
         }
         [Fact]
-        public void PlayStartingFromACompletelyWhiteMap()
+        public void PlayWithAFakeRule()
         {
-         
 
+            _sut = new Gamer(new List<IRule>() { new DoNothingFakeRule() });
 
-         //   _sut = new Gamer(ruleList);
+            var mapActual = new Map(new Coordinate(0,0), new Coordinate(40,40), new List<Tuple<Coordinate, Color>>());
 
-            var map = new Map(new Coordinate(0,0), new Coordinate(40,40), new List<Tuple<Coordinate, Color>>());
+            var antActual = new Ant(new Coordinate(20, 20), Direction.Up);
 
-            var actualCoordinate = new Coordinate(20, 20);
+            var antExpected = new Ant(new Coordinate(20,20), Direction.Up);
 
-            var ant = new Ant(actualCoordinate, Direction.Up);
+            var mapExpected = new Map(new Coordinate(0, 0), new Coordinate(40, 40), new List<Tuple<Coordinate, Color>>());
 
-            var antExpected = new Ant(new Coordinate(21,20), Direction.Right);
+            _sut.Play(antActual, mapActual);
 
-            var cellExpected = new Cell(Color.Black, new Coordinate(20, 20));
+            Assert.Equal(antExpected,antActual, _antEqualityComparer);
 
-            _sut.Play(ant, map);
-
-            var cellActual = map.GetCell(actualCoordinate);
-
-            Assert.Equal(antExpected,ant, _antEqualityComparer);
-
-            Assert.Equal(cellExpected, cellActual, _cellEqualityComparer);
+            Assert.Equal(mapExpected, mapActual, _mapEqualityComparer);
 
         }
 
-        [Fact]
-        public void ShouldEndWithGameOverException()
+        [Theory]
+        [MemberData(nameof(GetData))]
+        public void ShouldThrowGameOverException(Ant ant)
         {
             var map = new Map(new Coordinate(0, 0), new Coordinate(40, 40), new List<Tuple<Coordinate, Color>>());
 
-            var actualCoordinate = new Coordinate(40, 20);
-
-            var ant = new Ant(actualCoordinate, Direction.Up);
+            _sut = new Gamer(new List<IRule>(){new MoveOnlyForwardFakeRule()});
 
             Assert.Throws <GameOverException> (() => _sut.Play(ant, map));
 
+        }
+
+        public static IEnumerable<object[]> GetData()
+        {
+            var allData = new List<object[]>
+            {
+                new object[] { new Ant(new Coordinate(0,0), Direction.Down)},
+                new object[] { new Ant(new Coordinate(0,0), Direction.Left)},
+                new object[] { new Ant(new Coordinate(0,10), Direction.Left)},
+                new object[] { new Ant(new Coordinate(0,10), Direction.Left)},
+                new object[] { new Ant(new Coordinate(0,40), Direction.Up)},
+                new object[] { new Ant(new Coordinate(10,40), Direction.Up)},
+                new object[] { new Ant(new Coordinate(40,40), Direction.Up)},
+                new object[] { new Ant(new Coordinate(40,40), Direction.Right)},
+                new object[] { new Ant(new Coordinate(40,20), Direction.Right)},
+                new object[] { new Ant(new Coordinate(40,0), Direction.Right)},
+                new object[] { new Ant(new Coordinate(40,0), Direction.Down)},
+                new object[] { new Ant(new Coordinate(20,0), Direction.Down)}
+            };
+
+            return allData;
         }
     }
 }

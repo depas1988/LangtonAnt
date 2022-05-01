@@ -7,6 +7,7 @@ using LangtonAnt.Rule;
 using LangtonAnt.Utility;
 using LangtonAntTest.Utility;
 using Xunit;
+using MoveOnlyForwardFakeRule = LangtonAntTest.Utility.MoveOnlyForwardFakeRule;
 
 namespace LangtonAntTest.Rule
 {
