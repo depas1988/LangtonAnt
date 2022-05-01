@@ -1,14 +1,21 @@
-﻿namespace LangtonAnt.DataModel
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LangtonAnt.DataModel
 {
     public class Map
     {
         public Cell[,] Cells { get; private set; }
         private readonly Coordinate _bottomLeft;
         private readonly Coordinate _topRight;
-        public Map(Coordinate bottomLeft, Coordinate topRight)
+        private readonly List<Tuple<Coordinate, Color>> _coordinateListWithNoDefaultColor;
+
+        public Map(Coordinate bottomLeft, Coordinate topRight, List<Tuple<Coordinate, Color>> coordinateListWithNoDefaultColor)
         {
             _bottomLeft = bottomLeft;
             _topRight = topRight;
+            _coordinateListWithNoDefaultColor = coordinateListWithNoDefaultColor;
 
             CreateMap();
         }
@@ -22,10 +29,16 @@
 
             for (int i = 0; i < sizeX; i++)
             {
-
                 for (int j = 0; j < sizeY; j++)
                 {
-                    Cells[i, j]=new Cell(Color.White,new Coordinate(i,j));
+
+                    var color = _coordinateListWithNoDefaultColor
+                            .Where(x => x.Item1.X == i && x.Item1.Y == j)
+                            .Select(x => x.Item2)
+                            .FirstOrDefault()
+                        ;
+
+                    Cells[i, j]=new Cell(color,new Coordinate(i,j));
                 }
             }
         }

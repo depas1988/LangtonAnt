@@ -16,8 +16,8 @@
             Direction = Direction switch
             {
                 Direction.Right => Direction.Down,
-                Direction.Up=> Direction.Right,
-                Direction.Left=> Direction.Up,
+                Direction.Up => Direction.Right,
+                Direction.Left => Direction.Up,
                 Direction.Down => Direction.Left
             };
         }
@@ -31,11 +31,12 @@
                 Direction.Left => Direction.Down,
                 Direction.Down => Direction.Right
             };
-            
+
         }
+
         public void MoveForward()
         {
-            Coordinate=Coordinate.NextTo(Direction);
+            Coordinate = Coordinate.NextTo(Direction);
         }
     }
 
@@ -51,5 +52,16 @@
         Up,
         Left,
         Down
+    }
+
+
+    public static class Extensions
+    {
+        private static Color _defaultColor = Color.White;
+
+        public static bool IsDefault(this Color color)
+        {
+            return color == _defaultColor;
+        }
     }
 }

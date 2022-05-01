@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
@@ -7,11 +8,15 @@ using LangtonAnt.Interface;
 using LangtonAnt.Rule;
 using LangtonAnt.Utility;
 using LangtonAntTest.Utility;
+using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
 using Xunit;
 using Xunit.Sdk;
 
 namespace LangtonAntTest
 {
+    //TODO fare una regola (test double) che non fa niente che è applicabile (1 sola volta)
+    //TODO fare una regola (test double) che fa andare avanti di 1000 volte di modo che 
+    //TODO vada fuori dai boundaries (uno per lato e due per corner) 
     public class GamerTest
     {
 
@@ -21,12 +26,8 @@ namespace LangtonAntTest
 
         public GamerTest()
         {
-            var ruleList = new List<IRule>();
-            var whiteRule = new WhiteRule();
-            var blackRule = new BlackRule();
-            ruleList.Add(whiteRule);
-            ruleList.Add(blackRule);
-            _sut = new Gamer(ruleList);
+            
+           
             var coordinateEqualityComparer = new CoordinateEqualityComparer();
             _cellEqualityComparer = new CellEqualityComparer(coordinateEqualityComparer);
             _antEqualityComparer = new AntEqualityComparer(coordinateEqualityComparer);
@@ -34,7 +35,12 @@ namespace LangtonAntTest
         [Fact]
         public void PlayStartingFromACompletelyWhiteMap()
         {
-            var map = new Map(new Coordinate(0,0), new Coordinate(40,40));
+         
+
+
+         //   _sut = new Gamer(ruleList);
+
+            var map = new Map(new Coordinate(0,0), new Coordinate(40,40), new List<Tuple<Coordinate, Color>>());
 
             var actualCoordinate = new Coordinate(20, 20);
 
@@ -57,7 +63,7 @@ namespace LangtonAntTest
         [Fact]
         public void ShouldEndWithGameOverException()
         {
-            var map = new Map(new Coordinate(0, 0), new Coordinate(40, 40));
+            var map = new Map(new Coordinate(0, 0), new Coordinate(40, 40), new List<Tuple<Coordinate, Color>>());
 
             var actualCoordinate = new Coordinate(40, 20);
 

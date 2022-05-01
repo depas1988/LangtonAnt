@@ -47,12 +47,12 @@ namespace LangtonAntTest
         public void TestGameAfterFiveSteps()
         {
             var antActual = new Ant(new Coordinate(10, 10), Direction.Left);
-            var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20));
+            var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20), new List<Tuple<Coordinate, Color>>());
 
             var antExpected = new Ant(new Coordinate(10, 9), Direction.Down);
 
             _sut = new Game(_gamer);
-
+            //TODO Maptest.cs
             var mapExpected = new MapEmulator(new Coordinate(0, 0), new Coordinate(20, 20), _cellEqualityComparer);
             
             mapExpected.UpdateCell(new Coordinate(10,10),FlipToBlack);
@@ -72,7 +72,7 @@ namespace LangtonAntTest
         public void TestExceptionWithANonPositiveNumberOfIterations()
         {
             var antActual = new Ant(new Coordinate(10, 10), Direction.Left);
-            var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20));
+            var mapActual = new Map(new Coordinate(0, 0), new Coordinate(20, 20), new List<Tuple<Coordinate, Color>>());
 
             _sut = new Game(_gamer);
 

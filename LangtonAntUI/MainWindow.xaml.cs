@@ -276,7 +276,7 @@ namespace LangtonAntUI
                 
                 numberOfSquaresParsedResult = 10;
 
-            _map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresParsedResult, numberOfSquaresParsedResult));
+            _map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresParsedResult, numberOfSquaresParsedResult), new List<Tuple<Coordinate, Color>>());
 
             _ant = new Ant(new Coordinate(Convert.ToInt32(AntX.Text), Convert.ToInt32(AntY.Text)), Direction.Up);
 
