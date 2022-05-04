@@ -284,7 +284,21 @@ namespace LangtonAntUI
 
             _map = new Map(new Coordinate(0,0), new Coordinate(numberOfSquaresParsedResult, numberOfSquaresParsedResult), new List<Tuple<Coordinate, Color>>());
 
-            _ant = new Ant(new Coordinate(Convert.ToInt32(AntX.Text), Convert.ToInt32(AntY.Text)), Direction.Up);
+
+            //var direction = AntDirectionComboBox.SelectedValue;
+
+            Enum.TryParse(AntDirectionComboBox.SelectedValue.ToString(), out Direction directionAnt);
+
+
+            switch (directionAnt)
+            {
+                case Direction.Right: RotateImageClockwise(1); break;
+                case Direction.Up: RotateImageClockwise(0); break;
+                case Direction.Left: RotateImageClockwise(3); break;
+                case Direction.Down: RotateImageClockwise(2); break;
+            };
+
+            _ant = new Ant(new Coordinate(Convert.ToInt32(AntX.Text), Convert.ToInt32(AntY.Text)), directionAnt);
 
             PrepareChessGrid(numberOfSquaresParsedResult);
 

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:LangtonAntUI"
+        xmlns:langton="clr-namespace:LangtonAnt.DataModel;assembly=LangtonAnt"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="LangtonAnt" Height="820" Width="1020">
@@ -21,7 +21,12 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-      
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="langton:Direction"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </Window.Resources>
 
     <Grid Name="MainGrid" >
@@ -69,6 +74,9 @@
                     </Label>
                     <TextBox x:Name="AntY" Width="50" Style="{StaticResource cbTB}"/>
                 </StackPanel>
+                <Label Content="Direction of the Ant" RenderTransformOrigin="0.500,-10.805" FontWeight="Bold"/>
+                <ComboBox Name="AntDirectionComboBox" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100"
+                          ItemsSource="{Binding Source={StaticResource dataFromEnum}}"/>
                 <StackPanel Orientation="Vertical">
                     <Label FontWeight="Bold">Application Options</Label>
                     <CheckBox x:Name="cb">Random Ant</CheckBox>

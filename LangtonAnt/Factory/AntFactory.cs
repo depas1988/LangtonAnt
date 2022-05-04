@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using LangtonAnt.DataModel;
 
@@ -26,6 +27,11 @@ namespace LangtonAnt.Factory
             var coordinateY = _newRandom.Next(0, sizeY);
 
             return new Ant(new Coordinate(coordinateX, coordinateY), direction);
+        }
+
+        public Ant Create(Coordinate coordinateAnt, Direction direction=Direction.Up)
+        {
+            return new Ant(coordinateAnt, direction);
         }
     }
 }

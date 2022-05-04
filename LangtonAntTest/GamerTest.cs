@@ -52,19 +52,7 @@ namespace LangtonAntTest
 
         }
 
-        [Theory]
-        [MemberData(nameof(GetData))]
-        public void ShouldThrowGameOverException(Ant ant)
-        {
-            var map = new Map(new Coordinate(0, 0), new Coordinate(40, 40), new List<Tuple<Coordinate, Color>>());
-
-            _sut = new Gamer(new List<IRule>(){new MoveOnlyForwardFakeRule()});
-
-            Assert.Throws <GameOverException> (() => _sut.Play(ant, map));
-
-        }
-
-        public static IEnumerable<object[]> GetData()
+        public static IEnumerable<object[]> ShouldThrowGameOverExceptionGetData()
         {
             var allData = new List<object[]>
             {
@@ -84,5 +72,19 @@ namespace LangtonAntTest
 
             return allData;
         }
+
+        [Theory]
+        [MemberData(nameof(ShouldThrowGameOverExceptionGetData))]
+        public void ShouldThrowGameOverException(Ant ant)
+        {
+            var map = new Map(new Coordinate(0, 0), new Coordinate(40, 40), new List<Tuple<Coordinate, Color>>());
+
+            _sut = new Gamer(new List<IRule>(){new MoveOnlyForwardFakeRule()});
+
+            Assert.Throws <GameOverException> (() => _sut.Play(ant, map));
+
+        }
+
+        
     }
 }

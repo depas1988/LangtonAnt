@@ -40,12 +40,6 @@
         }
     }
 
-    public enum Color
-    {
-        Black, 
-        White
-    }
-
     public enum Direction
     {
         Right,

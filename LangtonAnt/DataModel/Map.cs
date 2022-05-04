@@ -27,22 +27,34 @@ namespace LangtonAnt.DataModel
 
             Cells =new Cell[sizeX, sizeY];
 
+
+
             for (int i = 0; i < sizeX; i++)
             {
                 for (int j = 0; j < sizeY; j++)
                 {
-                    
-                    var color = _coordinateListWithNoDefaultColor
-                            .Where(x => x.Item1.X == i && x.Item1.Y == j)
-                            .Select(x => x.Item2)
-                            .DefaultIfEmpty(Enum.GetValues(typeof(Color)).OfType<Color>()
-                                .FirstOrDefault(x => x.IsDefault()))
-                            .FirstOrDefault()
-                        ;
 
-                    Cells[i, j]=new Cell(color,new Coordinate(i,j));
+
+                    
+                    //var color = _coordinateListWithNoDefaultColor
+                    //        .Where(x => x.Item1.X == i && x.Item1.Y == j)
+                    //        .Select(x => x.Item2)
+                    //        .DefaultIfEmpty(Enum.GetValues(typeof(Color)).OfType<Color>()
+                    //            .FirstOrDefault(x => x.IsDefault()))
+                    //        .FirstOrDefault()
+                    //    ;
+
+                    Cells[i, j]=new Cell(Color.White,new Coordinate(i,j));
+
+
+
                 }
             }
+
+
+            //TODO da fare test
+            _coordinateListWithNoDefaultColor
+                .ForEach(x=> Cells[x.Item1.X, x.Item1.Y] = new Cell(x.Item2, new Coordinate(x.Item1.X, x.Item1.Y)));
         }
 
         public Cell GetCell(Coordinate coordinate)
