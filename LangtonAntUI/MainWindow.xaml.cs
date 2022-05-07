@@ -220,17 +220,11 @@ namespace LangtonAntUI
         {
             _chessGrid.Children.Clear();
 
+           
+
             foreach (var cell in _map.Cells)
             {
-                if (cell.Color == Color.White)
-                {
-
-                    var whiteBorder = new Border { Background = _solidWhite };
-                    Grid.SetRow(whiteBorder, cell.Coordinate.X);
-                    Grid.SetColumn(whiteBorder, cell.Coordinate.Y);
-                    _chessGrid.Children.Add(whiteBorder);
-                }
-
+                
                 if (cell.Color == Color.Black)
                 {
                     var blackBorder = new Border { Background = _solidBlack };
